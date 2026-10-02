@@ -1,0 +1,57 @@
+apiVersion: dynatrace.com/v1beta6
+kind: DynaKube
+metadata:
+  name: aws-eks-cluster
+  namespace: dynatrace
+  labels:
+    dynatrace.com/created-by: "dynatrace.kubernetes"
+
+spec:
+  apiUrl: "https://qkh25924.live.dynatrace.com/api"
+  tokens: dynakube
+
+  metadataEnrichment:
+    enabled: true
+
+  activeGate:
+    image: "public.ecr.aws/dynatrace/dynatrace-activegate:1.325.106.20260930-124623-fips"
+    capabilities:
+      - kubernetes-monitoring
+    resources:
+      requests:
+        cpu: 200m
+        memory: 6Gi
+      limits:
+        cpu: 1000m
+        memory: 6Gi
+    replicas: 1
+
+  templates:
+    otelCollector:
+      imageRef:
+        repository: public.ecr.aws/dynatrace/dynatrace-otel-collector
+        tag: latest
+
+    kspmNodeConfigurationCollector:
+      imageRef:
+        repository: public.ecr.aws/dynatrace/dynatrace-k8s-node-config-collector
+        tag: 1.6.1
+
+  logMonitoring: {}
+
+  kspm:
+    mappedHostPaths:
+      - /boot
+      - /etc
+      - /proc/sys/kernel
+      - /sys/fs
+      - /usr/lib/systemd/system
+      - /var/lib
+
+  telemetryIngest:
+    protocols:
+      - jaeger
+      - otlp
+      - statsd
+      - zipkin
+    serviceName: telemetry-ingest

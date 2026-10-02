@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: curl
+  name: curl
+  namespace: nginx
+spec:
+  containers:
+  - image: curlimages/curl:7.83.0
+    name: curl
+    command: ["bin/sh", "-c"]
+    args: 
+      - |
+        while true; do
+          curl -I nginx-deploy.nginx.svc.cluster.local:80;
+          sleep 1;
+        done
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "125m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

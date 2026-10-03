@@ -72,8 +72,8 @@ except subprocess.CalledProcessError as e:
     logger.exception("Error retrieving Nginx deployment details: %s", e.stderr)
     sys.exit(1)
     
-except FileNotFoundError:
-    logger.error("kubectl was not found. Check your installation and PATH.")
+except FileNotFoundError as e:
+    logger.error("kubectl was not found. Check your installation and PATH. %s", str(e))
     sys.exit(1)
     
 except Exception as e:

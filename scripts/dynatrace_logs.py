@@ -41,7 +41,8 @@ except subprocess.CalledProcessError as e:
     sys.exit(1)
     
 except FileNotFoundError as e:
-    logger.exception("kubectl was not found. Check your installation and PATH", str(e)
+    logger.exception("kubectl was not found. Check your installation and PATH", str(e))
+
 except Exception as e:
     logger.exception("An unexpected error occurred: %s", str(e))
     sys.exit(1)    

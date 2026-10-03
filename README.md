@@ -1,6 +1,6 @@
-# Dynatrace 📈
+# Dynatrace and Istio 📈
 
-
+This workloadcombines Dynatrace observability with Istio service mesh on Amazon EKS to improve workload visibility and service security. Kubernetes manifests and Python diagnostic scripts support deployment checks and troubleshooting, with Istio providing a foundation for mTLS, smoke testing, and traffic control.
 
 # Dynatrace Install 🖥️
 ```bash
@@ -70,11 +70,7 @@ terraform validate
 terraform plan
 terraform apply
 ```
-# Remove Helm CSI Driver 🧱
-```bash
-terraform state rm helm_release.ebs_csi_driver
-terraform destroy 
-```
+
 Verify Dynakubes 
 ```bash
 kubectl get dynakubes -n dynatrace
